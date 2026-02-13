@@ -1,221 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kallu, Be My Valentine ❤️</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #ff758c, #ff7eb3);
-      overflow: hidden;
-      text-align: center;
-      color: white;
-      position: relative;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kallu 🍍❤️ My Valentine</title>
 
-    .container {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 40px;
-      border-radius: 20px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      z-index: 2;
-    }
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+}
 
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 30px;
-    }
+.container {
+  position: relative;
+  z-index: 2;
+}
 
-    .glow-name {
-      font-size: 2.5rem;
-      font-weight: bold;
-      animation: glow 2s ease-in-out infinite alternate;
-    }
+h1 {
+  font-size: 2.5rem;
+  color: white;
+  animation: pulse 2s infinite;
+}
 
-    @keyframes glow {
-      from { text-shadow: 0 0 10px #fff, 0 0 20px #ff4b6e, 0 0 30px #ff4b6e; }
-      to { text-shadow: 0 0 20px #fff, 0 0 40px #ff99ac, 0 0 60px #ff99ac; }
-    }
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
 
-    .buttons {
-      position: relative;
-      height: 120px;
-    }
+.question {
+  font-size: 1.6rem;
+  color: white;
+  margin: 20px 0;
+}
 
-    button {
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-weight: bold;
-    }
+button {
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
 
-    #yesBtn {
-      padding: 18px 50px;
-      font-size: 1.6rem;
-      background-color: #ffffff;
-      color: #ff4b6e;
-      margin-right: 20px;
-    }
+#yesBtn {
+  background-color: #ff4b5c;
+  color: white;
+  font-size: 1.5rem;
+}
 
-    #yesBtn:hover {
-      transform: scale(1.15);
-    }
+#noBtn {
+  background-color: white;
+  color: #ff4b5c;
+  position: fixed;
+  top: 60%;
+  left: 55%;
+}
 
-    #noBtn {
-      padding: 8px 20px;
-      font-size: 0.9rem;
-      background-color: #ffffff;
-      color: #555;
-      position: absolute;
-    }
+#message {
+  font-size: 2rem;
+  color: white;
+  margin-top: 20px;
+  min-height: 60px;
+}
 
-    .message {
-      font-size: 2rem;
-      margin-top: 20px;
-      display: none;
-      animation: fadeIn 1s ease forwards;
-    }
+.heart {
+  position: absolute;
+  animation: float 5s linear infinite;
+}
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.8); }
-      to { opacity: 1; transform: scale(1); }
-    }
+@keyframes float {
+  from { transform: translateY(100vh); opacity: 1; }
+  to { transform: translateY(-10vh); opacity: 0; }
+}
 
-    /* Floating Hearts */
-    .heart {
-      position: absolute;
-      bottom: -20px;
-      color: rgba(255,255,255,0.8);
-      font-size: 20px;
-      animation: floatUp linear infinite;
-    }
+.ring {
+  font-size: 3rem;
+  animation: ringSpin 2s linear infinite;
+}
 
-    @keyframes floatUp {
-      from { transform: translateY(0); opacity: 1; }
-      to { transform: translateY(-110vh); opacity: 0; }
-    }
-
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    iframe { display: none; }
-  </style>
+@keyframes ringSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+</style>
 </head>
+
 <body>
 
-  <!-- Background Music -->
-  <iframe width="0" height="0"
-    src="https://www.youtube.com/embed/7iY5q5Xv3mM?autoplay=1&loop=1&playlist=7iY5q5Xv3mM"
-    frameborder="0"
-    allow="autoplay">
-  </iframe>
+<audio id="bgMusic" loop>
+  <source src="sufna.mp3" type="audio/mpeg">
+</audio>
 
-  <canvas id="fireworks"></canvas>
+<div class="container">
+  <h1>Kallu 🍍❤️</h1>
+  <div class="question">Will you be my Valentine for life?</div>
+  <button id="yesBtn">Yes</button>
+  <button id="noBtn">No</button>
+  <div id="message"></div>
+</div>
 
-  <div class="container">
-    <h1><span class="glow-name">Kallu ❤️</span><br><br>
-    Will you do me the honour of becoming my valentine for life?</h1>
-    <div class="buttons">
-      <button id="yesBtn">Yes 💖</button>
-      <button id="noBtn">No</button>
-    </div>
-    <div class="message" id="message">
-      Kallu 🥹❤️<br><br>
-      You just made me the happiest person alive! ✨💘<br><br>
-      Forever starts now 💍💕
-    </div>
-  </div>
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const message = document.getElementById("message");
+const music = document.getElementById("bgMusic");
 
-  <script>
-    const noBtn = document.getElementById("noBtn");
-    const yesBtn = document.getElementById("yesBtn");
-    const message = document.getElementById("message");
-    const canvas = document.getElementById("fireworks");
-    const ctx = canvas.getContext("2d");
+let yesScale = 1;
+let noScale = 1;
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+// Start music after first click (browser policy fix)
+document.addEventListener("click", () => {
+  music.play().catch(() => {});
+}, { once: true });
 
-    let particles = [];
+// Floating hearts
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = Math.random() * 20 + 20 + "px";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 5000);
+}, 300);
 
-    function createFirework() {
-      for (let i = 0; i < 100; i++) {
-        particles.push({
-          x: canvas.width / 2,
-          y: canvas.height / 2,
-          radius: Math.random() * 3,
-          color: `hsl(${Math.random() * 360}, 100%, 60%)`,
-          speedX: (Math.random() - 0.5) * 6,
-          speedY: (Math.random() - 0.5) * 6,
-          alpha: 1
-        });
-      }
-    }
+// FAST floating No button (rapid jump but never exits screen)
+noBtn.addEventListener("mouseover", () => {
+  const btnWidth = noBtn.offsetWidth;
+  const btnHeight = noBtn.offsetHeight;
 
-    function animateFireworks() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((p, index) => {
-        p.x += p.speedX;
-        p.y += p.speedY;
-        p.alpha -= 0.02;
+  const maxX = window.innerWidth - btnWidth - 5;
+  const maxY = window.innerHeight - btnHeight - 5;
 
-        ctx.globalAlpha = p.alpha;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.fill();
+  const randomX = Math.random() * maxX;
+  const randomY = Math.random() * maxY;
 
-        if (p.alpha <= 0) particles.splice(index, 1);
-      });
-      requestAnimationFrame(animateFireworks);
-    }
+  noBtn.style.left = randomX + "px";
+  noBtn.style.top = randomY + "px";
 
-    animateFireworks();
+  // Shrink slightly but keep clickable illusion
+  noScale -= 0.05;
+  if (noScale < 0.6) noScale = 0.6;
+  noBtn.style.transform = `scale(${noScale})`;
+});
 
-    // Floating No button
-    noBtn.addEventListener("mouseover", () => {
-      const x = Math.random() * (window.innerWidth - 100);
-      const y = Math.random() * (window.innerHeight - 50);
-      noBtn.style.left = `${x}px`;
-      noBtn.style.top = `${y}px`;
-    });
+// Yes button grows gradually
+document.addEventListener("mousemove", () => {
+  yesScale += 0.003;
+  if (yesScale > 1.6) yesScale = 1.6;
+  yesBtn.style.transform = `scale(${yesScale})`;
+});
 
-    // Yes button click
-    yesBtn.addEventListener("click", () => {
-      document.querySelector("h1").style.display = "none";
-      document.querySelector(".buttons").style.display = "none";
-      message.style.display = "block";
-      document.body.style.background = "linear-gradient(135deg, #ff4b6e, #ff9a9e)";
-      createFirework();
-      setInterval(createFirework, 1200);
-    });
+// Typewriter effect
+function typeWriter(text, i = 0) {
+  if (i < text.length) {
+    message.innerHTML += text.charAt(i);
+    setTimeout(() => typeWriter(text, i + 1), 50);
+  }
+}
 
-    // Floating hearts
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.classList.add("heart");
-      heart.innerHTML = "❤️";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = (3 + Math.random() * 5) + "s";
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 8000);
-    }
+// Yes click action
+yesBtn.addEventListener("click", () => {
+  message.innerHTML = "";
 
-    setInterval(createHeart, 300);
-  </script>
+  const ring = document.createElement("div");
+  ring.classList.add("ring");
+  ring.innerHTML = "💍";
+  message.appendChild(ring);
+
+  setTimeout(() => {
+    message.innerHTML = "";
+    typeWriter("Okay… now it’s time to marry me, damn it! What are you waiting for?! 💕");
+  }, 1500);
+});
+</script>
+
 </body>
 </html>
